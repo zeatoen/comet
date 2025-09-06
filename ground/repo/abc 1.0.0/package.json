@@ -1,0 +1,14 @@
+{
+	"name":"abc",
+	"version":"1.0.0",
+	"platform": {
+		"compiler":["clang","gcc"],
+		"os":["linux"],
+		"stdlib":["gnustdc++"],
+		"runtime":["glibc"]
+	},
+	"type":"static",
+	"dependencies":[],
+	"cpp-std":[">=17"]
+
+}
