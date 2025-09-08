@@ -11,12 +11,11 @@ app: $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 # Compile module interfaces into BMIs and objects
-
 command_sanitisation.o: command_sanitisation.cppm 
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 main.o: main.cpp  command_sanitisation.o
-	C -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 external:
 	 $(CXX) $(CXXFLAGS)  -fmodules -xc++-system-header \
