@@ -1,0 +1,42 @@
+CREATE TABLE IF NOT EXISTS Packages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    version TEXT NOT NULL,
+    UNIQUE(name, version)
+);
+
+CREATE TABLE IF NOT EXISTS Dependencies (
+    package_id INTEGER NOT NULL,
+    dependency_id INTEGER NOT NULL,
+    FOREIGN KEY(package_id) REFERENCES Packages(id),
+    FOREIGN KEY(dependency_id) REFERENCES Packages(id),
+    PRIMARY KEY(package_id, dependency_id)
+);
+
+
+INSERT INTO Packages (name, version) VALUES 
+('pkgA', '1.0'),
+('pkgB', '2.0'),
+('pkgC', '3.0'),
+('pkgD', '1.2');
+
+
+-- Get IDs
+SELECT * FROM Packages;
+
+-- Then insert dependencies using those IDs:
+INSERT INTO Dependencies (package_id, dependency_id) VALUES
+(1, 2),  -- pkgA@1.0 -> pkgB@2.0
+(1, 3),  -- pkgA@1.0 -> pkgC@3.0
+(2, 3),  -- pkgB@2.0 -> pkgC@3.0
+(3, 4);  -- pkgC@3.0 -> pkgD@1.2
+
+
+INSERT INTO Dependencies (package_id, dependency_id)
+SELECT 
+    p1.id, p2.id
+FROM 
+    Packages p1, Packages p2
+WHERE 
+    p1.name = 'pkgA' AND p1.version = '1.0' AND
+    p2.name = 'pkgB' AND p2.version = '2.0';
