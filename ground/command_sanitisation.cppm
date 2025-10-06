@@ -82,9 +82,7 @@ export bool init_conf(int argc, char **argv)
     root = cometRootCstr;
   }
 
-  if ((root == ""||!std::filesystem::exists(std::filesystem::path(root))) 
-          && main_config.action != config::actions::create_env)
-  {
+  if (root == "" && main_config.action != config::actions::create_env){
     std::cerr << "run source script first.!" << std::endl;
     return false;
   };
