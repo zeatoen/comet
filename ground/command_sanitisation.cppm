@@ -74,21 +74,19 @@ export bool init_conf(int argc, char **argv)
   }
 
   const char *cometRootCstr = std::getenv("COMET_ROOT");
+  std::string root;
   if (!cometRootCstr)
   {
-    throw std::runtime_error("Environment variable COMET_ROOT is not set");
+    root="";    
+  }else{
+    root = cometRootCstr;
   }
-  std::string root(cometRootCstr);
 
   if (root == "" && main_config.action != config::actions::create_env){
     std::cerr << "run source script first.!" << std::endl;
     return false;
   };
-  if (!std::filesystem::exists(std::filesystem::path(root)))
-  {
-    std::cout<<"No path\n";
-    return false;
-  }
+
 
   return true;
 }
